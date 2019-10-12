@@ -6,6 +6,7 @@ class CartTest {
     private val item = Item("test", 100)
     private val item2 = Item("test2", 150)
     private val markdownDeal = MarkDownDeal("test", 20)
+    private val markdownDeal2 = MarkDownDeal("test2", 50)
 
     @Test
     fun registerAnItem() {
@@ -31,10 +32,21 @@ class CartTest {
     }
 
     @Test
+    fun registerTwoMarkdownDeals() {
+        val cart = Cart()
+        cart.register(item, item2)
+        cart.register(markdownDeal, markdownDeal2)
+        cart.scan(item.name)
+        cart.scan(item2.name)
+        val expectedCost = item.unitCost - markdownDeal.unitCostOff + item2.unitCost - markdownDeal2.unitCostOff
+        assertEquals(expectedCost, cart.getTotal())
+    }
+
+    @Test
     fun throwErrorWhenItemDoesNotExist() {
-        assertFailsWith(IllegalArgumentException::class){Cart().getBasePrice("I do not exist")}
-        assertFailsWith(IllegalArgumentException::class){Cart().scan("I do not exist")}
-        assertFailsWith(IllegalArgumentException::class){Cart().remove("I do not exist", 1f)}
+        assertFailsWith(IllegalArgumentException::class) { Cart().getBasePrice("I do not exist") }
+        assertFailsWith(IllegalArgumentException::class) { Cart().scan("I do not exist") }
+        assertFailsWith(IllegalArgumentException::class) { Cart().remove("I do not exist", 1f) }
     }
 
     @Test
@@ -58,7 +70,7 @@ class CartTest {
         val cart = Cart()
         cart.register(item)
         cart.scan(item.name, 2)
-        assertEquals(item.unitCost*2, cart.getTotal())
+        assertEquals(item.unitCost * 2, cart.getTotal())
     }
 
     @Test
@@ -67,7 +79,7 @@ class CartTest {
         cart.register(item)
         cart.scan(item.name, 1)
         cart.scan(item.name, 1)
-        assertEquals(item.unitCost*2, cart.getTotal())
+        assertEquals(item.unitCost * 2, cart.getTotal())
     }
 
     @Test
