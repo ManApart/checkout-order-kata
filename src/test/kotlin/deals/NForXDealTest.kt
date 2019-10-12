@@ -37,4 +37,13 @@ class NForXDealTest {
         assertEquals(nForXDeal.totalCost * 2, cart.getTotal())
     }
 
+    @Test
+    fun remaindersAreNormalCost() {
+        val cart = Cart()
+        cart.register(item2)
+        cart.register(nForXDeal)
+        cart.scan(item2.name, nForXDeal.count * 2 + 1)
+        assertEquals(nForXDeal.totalCost * 2 + item2.unitCost, cart.getTotal())
+    }
+
 }
