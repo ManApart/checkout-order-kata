@@ -19,7 +19,7 @@ class Cart {
     }
 
     fun getTotal(): Int {
-        return scannedItems.keys.sumBy { it.unitCost }
+        return scannedItems.entries.sumBy { it.key.unitCost * it.value}
     }
 
 }
