@@ -55,4 +55,13 @@ class BuyNForXDealTest {
         assertEquals(nForXDeal.totalCost * 2 + item2.unitCost, cart.getTotal())
     }
 
+    @Test
+    fun dealCanBeLimited() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(BuyNForXDeal("test", 3f, 50, 3f))
+        cart.scan(item.name, 6)
+        assertEquals(50 + item.unitCost * 3, cart.getTotal())
+    }
+
 }
