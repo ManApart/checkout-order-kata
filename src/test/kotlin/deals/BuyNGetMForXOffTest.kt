@@ -31,7 +31,7 @@ class BuyNGetMForXOffTest {
     @Test
     fun buyOneGetOneHalfOff() {
         val cart = Cart()
-        val deal = BuyNGetMForXOff(item.name, 1f, 1f, item.unitCost/2)
+        val deal = BuyNGetMForXOff(item.name, 1f, 1f, item.unitCost / 2)
         cart.register(item)
         cart.register(deal)
         cart.scan(item.name, 2f)
@@ -47,6 +47,15 @@ class BuyNGetMForXOffTest {
         cart.register(deal)
         cart.scan(item.name, 1f)
         assertEquals(item.unitCost, cart.getTotal())
+    }
+
+    @Test
+    fun buyTwoGetOneFreeX2() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(BuyNGetMForXOff(item.name, 2f, 1f, item.unitCost))
+        cart.scan(item.name, 6)
+        assertEquals(item.unitCost * 4, cart.getTotal())
     }
 
 
