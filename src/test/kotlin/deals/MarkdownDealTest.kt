@@ -31,4 +31,13 @@ class MarkdownDealTest {
         assertEquals(expectedCost, cart.getTotal())
     }
 
+    @Test
+    fun dealCannotBeNegative() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(MarkDownDeal("test", 500))
+        cart.scan(item.name)
+        assertEquals(0, cart.getTotal())
+    }
+
 }
