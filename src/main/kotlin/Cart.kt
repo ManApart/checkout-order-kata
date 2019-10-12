@@ -13,10 +13,10 @@ class Cart {
             ?: throw IllegalArgumentException("$itemName is not a scannable item.")
     }
 
-    fun scan(itemName: String, units: Int) {
+    fun scan(itemName: String, units: Int = 1) {
         scan(itemName, units.toFloat())
     }
-    
+
     fun scan(itemName: String, units: Float) {
         val item = scannableItems[itemName]!!
         scannedItems[item] = units
