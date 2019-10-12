@@ -15,7 +15,7 @@ class NForXDealTest {
         val cart = Cart()
         cart.register(item2)
         cart.register(nForXDeal)
-        cart.scan(item2.name, 3)
+        cart.scan(item2.name, nForXDeal.count)
         assertEquals(nForXDeal.totalCost, cart.getTotal())
     }
 
@@ -26,6 +26,15 @@ class NForXDealTest {
         cart.register(nForXDeal)
         cart.scan(item2.name, 2)
         assertEquals(item2.unitCost * 2, cart.getTotal())
+    }
+
+    @Test
+    fun canDoMultiples() {
+        val cart = Cart()
+        cart.register(item2)
+        cart.register(nForXDeal)
+        cart.scan(item2.name, nForXDeal.count * 2)
+        assertEquals(nForXDeal.totalCost * 2, cart.getTotal())
     }
 
 }
