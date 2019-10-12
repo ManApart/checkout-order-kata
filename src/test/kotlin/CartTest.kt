@@ -23,6 +23,13 @@ class CartTest {
     }
 
     @Test
+    fun itemNamesAreCaseInsensitive() {
+        val cart = Cart()
+        cart.register(item2)
+        assertEquals(item2.unitCost, cart.getBasePrice(item2.name.toUpperCase()))
+    }
+
+    @Test
     fun registerAMarkdownDeal() {
         val cart = Cart()
         cart.register(item)

@@ -7,7 +7,7 @@ class Cart {
 
     fun register(vararg items: Item) {
         items.forEach { item ->
-            scannableItems[item.name] = item
+            scannableItems[item.name.toLowerCase()] = item
         }
     }
 
@@ -16,7 +16,7 @@ class Cart {
     }
 
     private fun getRegisteredItem(itemName: String): Item {
-        return scannableItems[itemName] ?: throw IllegalArgumentException("$itemName is not a scannable item.")
+        return scannableItems[itemName.toLowerCase()] ?: throw IllegalArgumentException("$itemName is not a scannable item.")
     }
 
     fun getBasePrice(itemName: String): Int {
