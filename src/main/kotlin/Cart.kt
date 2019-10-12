@@ -19,7 +19,7 @@ class Cart {
 
     fun scan(itemName: String, units: Float) {
         val item = scannableItems[itemName]!!
-        scannedItems[item] = units
+        scannedItems[item] = (scannedItems[item] ?: 0f) + units
     }
 
     fun remove(itemName: String, units: Float) {
@@ -28,7 +28,7 @@ class Cart {
     }
 
     fun getTotal(): Int {
-        return scannedItems.entries.sumBy { (it.key.unitCost * it.value).toInt()}
+        return scannedItems.entries.sumBy { (it.key.unitCost * it.value).toInt() }
     }
 
 

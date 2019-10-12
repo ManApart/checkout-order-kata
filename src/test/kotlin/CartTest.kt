@@ -50,6 +50,15 @@ class CartTest {
     }
 
     @Test
+    fun scanningIncrementsItemCount() {
+        val cart = Cart()
+        cart.register(item)
+        cart.scan(item.name, 1)
+        cart.scan(item.name, 1)
+        assertEquals(item.unitCost*2, cart.getTotal())
+    }
+
+    @Test
     fun scanTwoItems() {
         val cart = Cart()
         cart.register(item, item2)
