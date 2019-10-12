@@ -6,7 +6,7 @@ import item2
 import org.junit.Test
 import kotlin.test.assertEquals
 
-val nForXDeal = BuyNForXDeal("test2", 3f, 500)
+val nForXDeal = BuyNForXDeal(item2.name, 3f, 500)
 
 class BuyNForXDealTest {
 
@@ -59,7 +59,7 @@ class BuyNForXDealTest {
     fun dealCanBeLimited() {
         val cart = Cart()
         cart.register(item)
-        cart.register(BuyNForXDeal("test", 3f, 50, 3f))
+        cart.register(BuyNForXDeal(item.name, 3f, 50, 3f))
         cart.scan(item.name, 6)
         assertEquals(50 + item.unitCost * 3, cart.getTotal())
     }

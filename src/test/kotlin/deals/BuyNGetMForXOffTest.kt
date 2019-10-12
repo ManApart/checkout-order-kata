@@ -67,5 +67,14 @@ class BuyNGetMForXOffTest {
         assertEquals(item.unitCost * 5, cart.getTotal())
     }
 
+    @Test
+    fun dealCanBeLimited() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(BuyNGetMForXOff(item.name, 1f, 1f, item.unitCost, 1f))
+        cart.scan(item.name, 6)
+        assertEquals(item.unitCost * 5, cart.getTotal())
+    }
+
 
 }
