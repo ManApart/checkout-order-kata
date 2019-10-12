@@ -1,5 +1,6 @@
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class CartTest {
 
@@ -17,5 +18,10 @@ class CartTest {
         val item = Item("test2", 150)
         cart.register(item)
         assertEquals(item.unitCost, cart.getBasePrice(item.name))
+    }
+
+    @Test
+    fun throwErrorWhenItemDoesNotExist() {
+        assertFailsWith(IllegalArgumentException::class){Cart().getBasePrice("I do not exist")}
     }
 }
