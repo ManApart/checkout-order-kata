@@ -24,6 +24,7 @@ class CartTest {
     fun throwErrorWhenItemDoesNotExist() {
         assertFailsWith(IllegalArgumentException::class){Cart().getBasePrice("I do not exist")}
         assertFailsWith(IllegalArgumentException::class){Cart().scan("I do not exist")}
+        assertFailsWith(IllegalArgumentException::class){Cart().remove("I do not exist", 1f)}
     }
 
     @Test

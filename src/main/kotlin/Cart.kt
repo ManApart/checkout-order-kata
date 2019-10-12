@@ -8,9 +8,12 @@ class Cart {
         }
     }
 
+    private fun getRegisteredItem(itemName: String) : Item {
+        return scannableItems[itemName] ?: throw IllegalArgumentException("$itemName is not a scannable item.")
+    }
+
     fun getBasePrice(itemName: String): Int {
-        return scannableItems[itemName]?.unitCost
-            ?: throw IllegalArgumentException("$itemName is not a scannable item.")
+        return getRegisteredItem(itemName).unitCost
     }
 
     fun scan(itemName: String, units: Int = 1) {
@@ -18,12 +21,12 @@ class Cart {
     }
 
     fun scan(itemName: String, units: Float) {
-        val item = scannableItems[itemName] ?: throw IllegalArgumentException("$itemName is not a scannable item.")
+        val item = getRegisteredItem(itemName)
         scannedItems[item] = (scannedItems[item] ?: 0f) + units
     }
 
     fun remove(itemName: String, units: Float) {
-        val item = scannableItems[itemName]!!
+        val item = getRegisteredItem(itemName)
         scannedItems[item] = scannedItems[item]!! - units
     }
 
