@@ -58,4 +58,13 @@ class CartTest {
         assertEquals(item.unitCost + item2.unitCost, cart.getTotal())
     }
 
+
+    @Test
+    fun partialUnits() {
+        val cart = Cart()
+        cart.register(item)
+        cart.scan(item.name, 1.5f)
+        assertEquals((item.unitCost * 1.5f).toInt(), cart.getTotal())
+    }
+
 }
