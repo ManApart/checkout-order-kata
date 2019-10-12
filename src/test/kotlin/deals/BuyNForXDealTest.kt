@@ -6,9 +6,9 @@ import kotlin.test.assertEquals
 
 import Cart
 
-val nForXDeal = NForXDeal("test2", 3f, 500)
+val nForXDeal = BuyNForXDeal("test2", 3f, 500)
 
-class NForXDealTest {
+class BuyNForXDealTest {
 
     @Test
     fun simpleANForXDeal() {
