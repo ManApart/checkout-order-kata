@@ -4,12 +4,13 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
+val item = Item("test", 100)
+val item2 = Item("test2", 150)
+val markdownDeal = MarkDownDeal("test", 20)
+val markdownDeal2 = MarkDownDeal("test2", 50)
+val nForXDeal = NForXDeal("test2", 3, 500)
+
 class CartTest {
-    private val item = Item("test", 100)
-    private val item2 = Item("test2", 150)
-    private val markdownDeal = MarkDownDeal("test", 20)
-    private val markdownDeal2 = MarkDownDeal("test2", 50)
-    private val nForXDeal = NForXDeal("test2", 3, 500)
 
     @Test
     fun registerAnItem() {
@@ -30,35 +31,6 @@ class CartTest {
         val cart = Cart()
         cart.register(item2)
         assertEquals(item2.unitCost, cart.getBasePrice(item2.name.toUpperCase()))
-    }
-
-    @Test
-    fun registerAMarkdownDeal() {
-        val cart = Cart()
-        cart.register(item)
-        cart.register(markdownDeal)
-        cart.scan(item.name)
-        assertEquals(item.unitCost - markdownDeal.unitCostOff, cart.getTotal())
-    }
-
-    @Test
-    fun registerTwoMarkdownDeals() {
-        val cart = Cart()
-        cart.register(item, item2)
-        cart.register(markdownDeal, markdownDeal2)
-        cart.scan(item.name)
-        cart.scan(item2.name)
-        val expectedCost = item.unitCost - markdownDeal.unitCostOff + item2.unitCost - markdownDeal2.unitCostOff
-        assertEquals(expectedCost, cart.getTotal())
-    }
-
-    @Test
-    fun registerANForXDeal() {
-        val cart = Cart()
-        cart.register(item2)
-        cart.register(nForXDeal)
-        cart.scan(item2.name, 3)
-        assertEquals(nForXDeal.totalCost, cart.getTotal())
     }
 
     @Test
@@ -130,14 +102,12 @@ class CartTest {
     fun canRemoveAnItem() {
         val cart = Cart()
         cart.register(item)
-
         assertEquals(0, cart.getTotal())
 
         cart.scan(item.name)
         assertEquals(item.unitCost, cart.getTotal())
 
         cart.remove(item.name, 1f)
-
         assertEquals(0, cart.getTotal())
     }
 
@@ -145,11 +115,9 @@ class CartTest {
     fun cannotHaveNegativeItemCounts() {
         val cart = Cart()
         cart.register(item)
-
         assertEquals(0, cart.getTotal())
 
         cart.remove(item.name, 1f)
-
         assertEquals(0, cart.getTotal())
     }
 
