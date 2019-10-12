@@ -1,10 +1,10 @@
 package deals
 
+import Cart
+import item
 import item2
 import org.junit.Test
 import kotlin.test.assertEquals
-
-import Cart
 
 val nForXDeal = BuyNForXDeal("test2", 3f, 500)
 
@@ -17,6 +17,15 @@ class BuyNForXDealTest {
         cart.register(nForXDeal)
         cart.scan(item2.name, nForXDeal.count)
         assertEquals(nForXDeal.totalCost, cart.getTotal())
+    }
+
+    @Test
+    fun doNothingForOtherItems() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(nForXDeal)
+        cart.scan(item.name, nForXDeal.count)
+        assertEquals((item.unitCost * nForXDeal.count).toInt(), cart.getTotal())
     }
 
     @Test
