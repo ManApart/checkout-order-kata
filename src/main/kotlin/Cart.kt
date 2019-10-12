@@ -1,9 +1,11 @@
 class Cart {
-    fun register(item: Item) {
+    private val scannableItems = mutableMapOf<String, Item>()
 
+    fun register(item: Item) {
+        scannableItems[item.name] = item
     }
 
     fun getBasePrice(itemName: String): Int {
-        return 100
+        return scannableItems[itemName]!!.unitCost
     }
 }

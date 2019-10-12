@@ -10,4 +10,12 @@ class CartTest {
         cart.register(item)
         assertEquals(item.unitCost, cart.getBasePrice(item.name))
     }
+
+    @Test
+    fun registerASecondItem() {
+        val cart = Cart()
+        val item = Item("test2", 150)
+        cart.register(item)
+        assertEquals(item.unitCost, cart.getBasePrice(item.name))
+    }
 }
