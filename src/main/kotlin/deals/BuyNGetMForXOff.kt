@@ -1,6 +1,7 @@
 package deals
 
 import ScannedItem
+import kotlin.math.roundToInt
 
 class BuyNGetMForXOff(
     private val itemName: String,
@@ -14,9 +15,12 @@ class BuyNGetMForXOff(
         if (itemName == item.name && item.count > requiredCount) {
             val unitCost = item.adjustedPerUnitPrice()
             val discountCost = unitCost - discountCostOff
-            val required = requiredRatio * item.count
-            val discounted = item.count - required
-            item.adjustedCost = (required * unitCost).toInt() + (discounted * discountCost).toInt()
+
+            val required = (requiredRatio * item.count).roundToInt()
+            val discounted = ((1-requiredRatio) * item.count).roundToInt()
+            val leftOvers = item.count - required - discounted
+
+            item.adjustedCost = ((required + leftOvers) * unitCost).toInt() + (discounted * discountCost)
         }
     }
 }

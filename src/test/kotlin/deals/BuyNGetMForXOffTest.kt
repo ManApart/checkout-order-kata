@@ -58,5 +58,14 @@ class BuyNGetMForXOffTest {
         assertEquals(item.unitCost * 4, cart.getTotal())
     }
 
+    @Test
+    fun remaindersAreNormalPrice() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(BuyNGetMForXOff(item.name, 2f, 1f, item.unitCost))
+        cart.scan(item.name, 7)
+        assertEquals(item.unitCost * 5, cart.getTotal())
+    }
+
 
 }
