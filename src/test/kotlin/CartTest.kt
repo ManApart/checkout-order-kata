@@ -74,4 +74,19 @@ class CartTest {
         assertEquals(item.unitCost, cart.getTotal())
     }
 
+    @Test
+    fun canRemoveAnItem() {
+        val cart = Cart()
+        cart.register(item)
+
+        assertEquals(0, cart.getTotal())
+
+        cart.scan(item.name)
+        assertEquals(item.unitCost, cart.getTotal())
+
+        cart.remove(item.name, 1f)
+
+        assertEquals(0, cart.getTotal())
+    }
+
 }
