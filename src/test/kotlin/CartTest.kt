@@ -1,14 +1,9 @@
-import deals.MarkDownDeal
-import deals.NForXDeal
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 val item = Item("test", 100)
 val item2 = Item("test2", 150)
-val markdownDeal = MarkDownDeal("test", 20)
-val markdownDeal2 = MarkDownDeal("test2", 50)
-val nForXDeal = NForXDeal("test2", 3, 500)
 
 class CartTest {
 

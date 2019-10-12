@@ -1,21 +1,31 @@
 package deals
 
 import item2
-import nForXDeal
 import org.junit.Test
 import kotlin.test.assertEquals
 
 import Cart
 
+val nForXDeal = NForXDeal("test2", 3f, 500)
+
 class NForXDealTest {
 
     @Test
-    fun registerANForXDeal() {
+    fun simpleANForXDeal() {
         val cart = Cart()
         cart.register(item2)
         cart.register(nForXDeal)
         cart.scan(item2.name, 3)
         assertEquals(nForXDeal.totalCost, cart.getTotal())
+    }
+
+    @Test
+    fun doesNothingIfBelowUnitCount() {
+        val cart = Cart()
+        cart.register(item2)
+        cart.register(nForXDeal)
+        cart.scan(item2.name, 2)
+        assertEquals(item2.unitCost * 2, cart.getTotal())
     }
 
 }

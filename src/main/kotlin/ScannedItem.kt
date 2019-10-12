@@ -1,0 +1,1 @@
+class ScannedItem(val name: String, val count: Float, var adjustedCost: Int)

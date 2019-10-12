@@ -1,7 +1,7 @@
 package deals
 
-import Item
+import ScannedItem
 
 interface Deal {
-    fun apply(adjustedCosts: MutableMap<Item, Int>)
+    fun apply(item: ScannedItem)
 }

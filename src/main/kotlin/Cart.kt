@@ -3,7 +3,7 @@ import kotlin.math.max
 
 class Cart {
     private val scannableItems = mutableMapOf<String, Item>()
-    private val scannedItems = mutableMapOf<Item, Float>()
+    private val scannedItemCounts = mutableMapOf<Item, Float>()
     private var deals = mutableListOf<Deal>()
 
     fun register(vararg items: Item) {
@@ -31,22 +31,27 @@ class Cart {
 
     fun scan(itemName: String, units: Float) {
         val item = getRegisteredItem(itemName)
-        scannedItems[item] = (scannedItems[item] ?: 0f) + units
+        scannedItemCounts[item] = (scannedItemCounts[item] ?: 0f) + units
     }
 
     fun remove(itemName: String, units: Float) {
         val item = getRegisteredItem(itemName)
-        val newCount = (scannedItems[item] ?: 0f) - units
-        scannedItems[item] = max(0f, newCount)
+        val newCount = (scannedItemCounts[item] ?: 0f) - units
+        scannedItemCounts[item] = max(0f, newCount)
     }
 
     fun getTotal(): Int {
-        val adjustedCosts =
-            scannedItems.mapValues { (item, units) -> (getBasePrice(item.name) * units).toInt() }.toMutableMap()
-        deals.forEach {
-            it.apply(adjustedCosts)
+        val adjustedItems = scannedItemCounts.map { (item, units) -> createScannedItem(item, units) }
+        adjustedItems.forEach { item ->
+            deals.forEach { deal ->
+                deal.apply(item)
+            }
         }
-        return adjustedCosts.values.sum()
+        return adjustedItems.sumBy { it.adjustedCost }
+    }
+
+    private fun createScannedItem(item: Item, units: Float): ScannedItem {
+        return ScannedItem(item.name, units, (getBasePrice(item.name) * units).toInt())
     }
 
 

@@ -6,12 +6,13 @@ import kotlin.test.assertEquals
 import Cart
 import item
 import item2
-import markdownDeal
-import markdownDeal2
+
+val markdownDeal = MarkDownDeal("test", 20)
+val markdownDeal2 = MarkDownDeal("test2", 50)
 
 class MarkdownDealTest {
     @Test
-    fun registerAMarkdownDeal() {
+    fun simpleAMarkdownDeal() {
         val cart = Cart()
         cart.register(item)
         cart.register(markdownDeal)
@@ -20,7 +21,7 @@ class MarkdownDealTest {
     }
 
     @Test
-    fun registerTwoMarkdownDeals() {
+    fun twoMarkdownDeals() {
         val cart = Cart()
         cart.register(item, item2)
         cart.register(markdownDeal, markdownDeal2)

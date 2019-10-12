@@ -1,12 +1,12 @@
 package deals
 
-import Item
+import ScannedItem
 
-class NForXDeal(private val itemName: String, private val count: Int, val totalCost: Int) : Deal {
+class NForXDeal(private val itemName: String, private val count: Float, val totalCost: Int) : Deal {
 
-    override fun apply(adjustedCosts: MutableMap<Item, Int>) {
-        adjustedCosts.keys.filter { itemName == it.name }.forEach { item ->
-            adjustedCosts[item] = totalCost
+    override fun apply(item: ScannedItem) {
+        if (itemName == item.name && item.count == count) {
+            item.adjustedCost = totalCost
         }
     }
 }
