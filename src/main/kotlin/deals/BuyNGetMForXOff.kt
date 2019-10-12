@@ -10,7 +10,7 @@ class BuyNGetMForXOff(
 ) : Deal {
 
     override fun apply(item: ScannedItem) {
-        if (itemName == item.name) {
+        if (itemName == item.name && item.count > requiredCount) {
             val unitCost = item.adjustedPerUnitPrice()
             val discountCost = unitCost - discountCostOff
             item.adjustedCost = (requiredCount * unitCost).toInt() + (discountCount * discountCost).toInt()

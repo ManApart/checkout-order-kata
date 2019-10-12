@@ -6,14 +6,15 @@ import item2
 import org.junit.Test
 import kotlin.test.assertEquals
 
+val nGetMForXDeal = BuyNGetMForXOff(item.name, 1f, 1f, item.unitCost)
+
 class BuyNGetMForXOffTest {
 
     @Test
     fun buyOneGetOneFree() {
         val cart = Cart()
-        val deal = BuyNGetMForXOff(item.name, 1f, 1f, item.unitCost)
         cart.register(item)
-        cart.register(deal)
+        cart.register(nGetMForXDeal)
         cart.scan(item.name, 2f)
         assertEquals(item.unitCost, cart.getTotal())
     }
@@ -21,9 +22,8 @@ class BuyNGetMForXOffTest {
     @Test
     fun onlyEffectiveForSelectItems() {
         val cart = Cart()
-        val deal = BuyNGetMForXOff(item.name, 1f, 1f, item.unitCost)
         cart.register(item2)
-        cart.register(deal)
+        cart.register(nGetMForXDeal)
         cart.scan(item2.name, 2f)
         assertEquals(item2.unitCost * 2, cart.getTotal())
     }
@@ -38,6 +38,16 @@ class BuyNGetMForXOffTest {
         assertEquals((item.unitCost * 1.5f).toInt(), cart.getTotal())
     }
 
+
+    @Test
+    fun doesNothingIfBelowUnitCount() {
+        val cart = Cart()
+        cart.register(item)
+        val deal = BuyNGetMForXOff(item.name, 2f, 1f, item.unitCost)
+        cart.register(deal)
+        cart.scan(item.name, 1f)
+        assertEquals(item.unitCost, cart.getTotal())
+    }
 
 
 }
