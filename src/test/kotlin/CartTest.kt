@@ -100,4 +100,16 @@ class CartTest {
         assertEquals(0, cart.getTotal())
     }
 
+    @Test
+    fun cannotHaveNegativeItemCounts() {
+        val cart = Cart()
+        cart.register(item)
+
+        assertEquals(0, cart.getTotal())
+
+        cart.remove(item.name, 1f)
+
+        assertEquals(0, cart.getTotal())
+    }
+
 }

@@ -1,3 +1,5 @@
+import kotlin.math.max
+
 class Cart {
     private val scannableItems = mutableMapOf<String, Item>()
     private val scannedItems = mutableMapOf<Item, Float>()
@@ -8,7 +10,7 @@ class Cart {
         }
     }
 
-    private fun getRegisteredItem(itemName: String) : Item {
+    private fun getRegisteredItem(itemName: String): Item {
         return scannableItems[itemName] ?: throw IllegalArgumentException("$itemName is not a scannable item.")
     }
 
@@ -27,7 +29,8 @@ class Cart {
 
     fun remove(itemName: String, units: Float) {
         val item = getRegisteredItem(itemName)
-        scannedItems[item] = scannedItems[item]!! - units
+        val newCount = (scannedItems[item] ?: 0f) - units
+        scannedItems[item] = max(0f, newCount)
     }
 
     fun getTotal(): Int {
