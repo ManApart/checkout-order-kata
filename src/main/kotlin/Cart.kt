@@ -6,6 +6,17 @@ class Cart {
     }
 
     fun getBasePrice(itemName: String): Int {
-        return scannableItems[itemName]?.unitCost ?: throw IllegalArgumentException("$itemName is not a scannable item.")
+        return scannableItems[itemName]?.unitCost
+            ?: throw IllegalArgumentException("$itemName is not a scannable item.")
     }
+
+    fun scan(itemName: String, units: Int) {
+
+    }
+
+    fun getTotal(): Int {
+        return 100
+    }
+
+
 }

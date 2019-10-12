@@ -24,4 +24,15 @@ class CartTest {
     fun throwErrorWhenItemDoesNotExist() {
         assertFailsWith(IllegalArgumentException::class){Cart().getBasePrice("I do not exist")}
     }
+
+
+    @Test
+    fun scanAnItem() {
+        val cart = Cart()
+        val item = Item("test", 100)
+        cart.register(item)
+        cart.scan(item.name, 1)
+        assertEquals(item.unitCost, cart.getTotal())
+    }
+
 }
