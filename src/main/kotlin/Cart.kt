@@ -1,9 +1,11 @@
 class Cart {
     private val scannableItems = mutableMapOf<String, Item>()
-    private var scannedItemCost = 0
+    private val scannedItems = mutableMapOf<Item, Int>()
 
-    fun register(item: Item) {
-        scannableItems[item.name] = item
+    fun register(vararg items: Item) {
+        items.forEach { item ->
+            scannableItems[item.name] = item
+        }
     }
 
     fun getBasePrice(itemName: String): Int {
@@ -13,12 +15,11 @@ class Cart {
 
     fun scan(itemName: String, units: Int) {
         val item = scannableItems[itemName]!!
-        scannedItemCost = item.unitCost
+        scannedItems[item] = units
     }
 
     fun getTotal(): Int {
-        return scannedItemCost
+        return scannedItems.keys.sumBy { it.unitCost }
     }
-
 
 }
