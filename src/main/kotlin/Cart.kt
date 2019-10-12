@@ -3,11 +3,16 @@ import kotlin.math.max
 class Cart {
     private val scannableItems = mutableMapOf<String, Item>()
     private val scannedItems = mutableMapOf<Item, Float>()
+    private var deal: MarkDownDeal? = null
 
     fun register(vararg items: Item) {
         items.forEach { item ->
             scannableItems[item.name] = item
         }
+    }
+
+    fun register(deal: MarkDownDeal) {
+        this.deal = deal
     }
 
     private fun getRegisteredItem(itemName: String): Item {
@@ -34,7 +39,11 @@ class Cart {
     }
 
     fun getTotal(): Int {
-        return scannedItems.entries.sumBy { (it.key.unitCost * it.value).toInt() }
+        return scannedItems.entries.sumBy { getItemPrice(it) }
+    }
+
+    private fun getItemPrice(it: MutableMap.MutableEntry<Item, Float>) : Int {
+       return ((it.key.unitCost - (deal?.unitCostOff ?: 0)) * it.value).toInt()
     }
 
 

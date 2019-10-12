@@ -5,6 +5,7 @@ import kotlin.test.assertFailsWith
 class CartTest {
     private val item = Item("test", 100)
     private val item2 = Item("test2", 150)
+    private val markdownDeal = MarkDownDeal("test", 20)
 
     @Test
     fun registerAnItem() {
@@ -18,6 +19,15 @@ class CartTest {
         val cart = Cart()
         cart.register(item2)
         assertEquals(item2.unitCost, cart.getBasePrice(item2.name))
+    }
+
+    @Test
+    fun registerAMarkdownDeal() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(markdownDeal)
+        cart.scan(item.name)
+        assertEquals(item.unitCost - markdownDeal.unitCostOff, cart.getTotal())
     }
 
     @Test
