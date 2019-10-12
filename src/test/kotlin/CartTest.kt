@@ -1,3 +1,5 @@
+import deals.MarkDownDeal
+import deals.NForXDeal
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -7,6 +9,7 @@ class CartTest {
     private val item2 = Item("test2", 150)
     private val markdownDeal = MarkDownDeal("test", 20)
     private val markdownDeal2 = MarkDownDeal("test2", 50)
+    private val nForXDeal = NForXDeal("test2", 3, 500)
 
     @Test
     fun registerAnItem() {
@@ -47,6 +50,15 @@ class CartTest {
         cart.scan(item2.name)
         val expectedCost = item.unitCost - markdownDeal.unitCostOff + item2.unitCost - markdownDeal2.unitCostOff
         assertEquals(expectedCost, cart.getTotal())
+    }
+
+    @Test
+    fun registerANForXDeal() {
+        val cart = Cart()
+        cart.register(item2)
+        cart.register(nForXDeal)
+        cart.scan(item2.name, 3)
+        assertEquals(nForXDeal.totalCost, cart.getTotal())
     }
 
     @Test

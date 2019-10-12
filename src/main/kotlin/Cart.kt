@@ -1,9 +1,10 @@
+import deals.Deal
 import kotlin.math.max
 
 class Cart {
     private val scannableItems = mutableMapOf<String, Item>()
     private val scannedItems = mutableMapOf<Item, Float>()
-    private var deals = mutableListOf<MarkDownDeal>()
+    private var deals = mutableListOf<Deal>()
 
     fun register(vararg items: Item) {
         items.forEach { item ->
@@ -11,12 +12,13 @@ class Cart {
         }
     }
 
-    fun register(vararg deals: MarkDownDeal) {
+    fun register(vararg deals: Deal) {
         this.deals.addAll(deals)
     }
 
     private fun getRegisteredItem(itemName: String): Item {
-        return scannableItems[itemName.toLowerCase()] ?: throw IllegalArgumentException("$itemName is not a scannable item.")
+        return scannableItems[itemName.toLowerCase()]
+            ?: throw IllegalArgumentException("$itemName is not a scannable item.")
     }
 
     fun getBasePrice(itemName: String): Int {
@@ -42,15 +44,9 @@ class Cart {
         val adjustedCosts =
             scannedItems.mapValues { (item, units) -> (getBasePrice(item.name) * units).toInt() }.toMutableMap()
         deals.forEach {
-            applyDeal(it, adjustedCosts)
+            it.apply(adjustedCosts)
         }
         return adjustedCosts.values.sum()
-    }
-
-    private fun applyDeal(deal: MarkDownDeal, adjustedCosts: MutableMap<Item, Int>) {
-        adjustedCosts.keys.filter { deal.itemName == it.name }.forEach { item->
-            adjustedCosts[item] = adjustedCosts[item]!! - deal.unitCostOff
-        }
     }
 
 
