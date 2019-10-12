@@ -40,4 +40,16 @@ class MarkdownDealTest {
         assertEquals(0, cart.getTotal())
     }
 
+    @Test
+    fun noMoneyBackOn0Amount() {
+        val cart = Cart()
+        cart.register(item)
+        cart.register(markdownDeal)
+
+        cart.scan(item.name)
+        cart.remove(item.name, 1f)
+
+        assertEquals(0, cart.getTotal())
+    }
+
 }
